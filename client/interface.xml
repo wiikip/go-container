@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkWindow" id="main_window">
+    <property name="can_focus">False</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="headerbar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="title" translatable="yes">This is the title</property>
+        <property name="subtitle" translatable="yes">This is the subtitle</property>
+        <property name="show_close_button">True</property>
+        <child>
+          <object class="GtkButton" id="test_button">
+            <property name="label" translatable="yes">Click me</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="on_test_button_clicked" swapped="no"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="test_entry">
+            <property name="label" translatable="yes">Click me</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="on_test_button_clicked" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
+</interface>
