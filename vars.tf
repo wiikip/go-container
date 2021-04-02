@@ -3,7 +3,3 @@ variable "port" {
  default = "3000"
 }
 
-variable "server-ip"{
-    type = string
-    default = "localhost"
-}

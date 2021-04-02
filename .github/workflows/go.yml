@@ -33,3 +33,12 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: wiikip/go-container:${{github.sha}}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Plan test
+        run: terraform plan -var 'client_certificate=${{secrets.KUBE_CLIENT_CERTIFICATE}}' -var 'client_key=${{secrets.KUBE_CLIENT_KEY}}' -var 'ca-certificate=${{secrets.KUBE_CA_CERTIFICATE}}'

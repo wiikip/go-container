@@ -23,13 +23,8 @@ spec {
         container{
           env {
             name= "PORT"
-            value = 3000
+            value = var.port
           }
-          env{
-              name = "SERVER_IP"
-              value = "localhost"
-          }
-
           image = "wiikip/go-container:latest"
           name = "go-container"
           }
