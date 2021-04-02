@@ -2,7 +2,7 @@ FROM golang:alpine AS building
 
 WORKDIR /app
 
-COPY . /app
+COPY ./server /app
 
  
 RUN go get -d -v
