@@ -2,11 +2,6 @@ variable "port" {
  type =  string
  default = "3000"
 }
-
-variable "client_certificate" {
-    type = string
-  
-}
 variable "client_certificate" {
     type = string
 }
