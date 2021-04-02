@@ -32,7 +32,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: wiikip/go-container:${{github.sha}}
+          tags: wiikip/go-container:latest
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -41,4 +41,4 @@ jobs:
         run: terraform init
 
       - name: Plan test
-        run: terraform plan -var 'client_certificate=${{secrets.KUBE_CLIENT_CERTIFICATE}}' -var 'client_key=${{secrets.KUBE_CLIENT_KEY}}' -var 'ca-certificate=${{secrets.KUBE_CA_CERTIFICATE}}'
+        run: terraform apply -auto-approve -var 'client_certificate=${{secrets.KUBE_CLIENT_CERTIFICATE}}' -var 'client_key=${{secrets.KUBE_CLIENT_KEY}}' -var 'ca-certificate=${{secrets.KUBE_CA_CERTIFICATE}}'

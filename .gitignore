@@ -15,5 +15,8 @@
 # vendor/
 
 secrets.tf
+vars.tf
 
 .terraform/
+
+terraform.*
