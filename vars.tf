@@ -2,18 +2,14 @@ variable "port" {
  type =  string
  default = "3000"
 }
-variable "client_certificate" {
+variable "KUBE_CLIENT_CERTIFICATE" {
     type = string
 }
 
-variable "client_key" {
+variable "KUBE_CLIENT_KEY" {
     type = string
 }
 
-variable "ca_certificate" {
-    type = string
-}
-
-variable "cluster_endpoint"{
+variable "KUBE_CA_CERTIFICATE" {
     type = string
 }
