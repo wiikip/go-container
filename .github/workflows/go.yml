@@ -44,5 +44,4 @@ jobs:
         continue-on-error: true
 
       - name: Plan test
-        run: terraform plan -no-color -var 'client_certificate=${{secrets.KUBE_CLIENT_CERTIFICATE}}' -var 'client_key=${{secrets.KUBE_CLIENT_KEY}}' -var 'ca-certificate=${{secrets.KUBE_CA_CERTIFICATE}}'
-        continue-on-error: true
+        run: terraform apply -auto-approve
