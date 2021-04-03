@@ -25,7 +25,7 @@ spec {
             name= "PORT"
             value = var.port
           }
-          image = "wiikip/go-container:latest"
+          image = "wiikip/go-container:" + var.tag
           name = "go-container"
           }
         }
@@ -43,6 +43,7 @@ spec {
       port = 80
       target_port = 3000
       protocol = "TCP"
+      node_port = 31384
     }
     selector = {
       app = kubernetes_deployment.go-container-server.metadata.0.labels.app
@@ -51,28 +52,6 @@ spec {
   }
 }
 
-resource "kubernetes_ingress" "go-container-ingress" {
-    metadata {
-      name = "go-container-ingress"
-      namespace = "go-container"
-    }
-    spec {
-    rule{
-      host = "wiikip.viarezo.fr"
-      http{
-        path{
-          path ="/"
-          backend{
-            service_name = kubernetes_service.go-container-service.metadata.0.name
-            service_port = 80
-          }
-        }
-      }
-
-    }
-  } 
-  
-}
 
 output "nodeport" {
   value=kubernetes_service.go-container-service.spec.0.port.0.node_port

@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  host = "https://138.195.138.77:6443"
+  host = var.KUBE_HOST
 
   client_certificate = var.KUBE_CLIENT_CERTIFICATE
   client_key = var.KUBE_CLIENT_KEY

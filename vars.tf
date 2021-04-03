@@ -13,3 +13,12 @@ variable "KUBE_CLIENT_KEY" {
 variable "KUBE_CA_CERTIFICATE" {
     type = string
 }
+
+variable "KUBE_HOST" {
+    type = string
+}
+
+variable "tag" {
+    type = string
+    default = "latest" 
+}
