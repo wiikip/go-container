@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "go-container-server" {
             name  = "PORT"
             value = var.port
           }
-          image = "wiikip/go-container:" + var.tag
+          image = "wiikip/go-container:${var.tag}"
           name  = "go-container"
         }
       }
