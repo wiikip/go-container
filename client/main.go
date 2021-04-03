@@ -32,7 +32,7 @@ func main() {
 	// Connect function to application activate event
 	application.Connect("activate", func() {
 		log.Println("application activate")
-		err := myClient.Connect("wiikip.viarezo.fr", "30897")
+		err := myClient.Connect("wiikip.viarezo.fr", "31384")
 		if err != nil {
 			log.Println("Error",err)
 			return
