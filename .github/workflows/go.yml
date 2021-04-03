@@ -49,7 +49,7 @@ jobs:
         id: vars
         run: |-
           cat > pipeline.auto.tfvars << EOF
-          tag="${{github.sha}}"
+          tag = "${{github.sha}}"
           EOF
 
       - name: Terraform init
