@@ -1,24 +1,24 @@
 variable "port" {
- type =  string
- default = "3000"
+  type    = string
+  default = "3000"
 }
 variable "KUBE_CLIENT_CERTIFICATE" {
-    type = string
+  type = string
 }
 
 variable "KUBE_CLIENT_KEY" {
-    type = string
+  type = string
 }
 
 variable "KUBE_CA_CERTIFICATE" {
-    type = string
+  type = string
 }
 
 variable "KUBE_HOST" {
-    type = string
+  type = string
 }
 
 variable "tag" {
-    type = string
-    default = "latest" 
+  type    = string
+  default = "latest"
 }
