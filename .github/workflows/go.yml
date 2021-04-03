@@ -63,7 +63,7 @@ jobs:
       - name: Terraform plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -var tag=${{github.sha}}
+        run: terraform plan -no-color
         continue-on-error: true
 
       - name: Update Pull Request
