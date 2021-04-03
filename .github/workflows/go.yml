@@ -49,8 +49,8 @@ jobs:
         working-directory: ./terraform
         id: vars
         run: |-
-          cat > pipeline.auto.tfvars <<EOF
-          tag = "${{ github.sha }}"
+          cat > pipeline.auto.tfvars << EOF
+          tag="${{github.sha}}"
           EOF
 
       - name: Terraform init
