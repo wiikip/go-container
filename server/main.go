@@ -129,7 +129,7 @@ func main() {
 			log.Println("ERROR: ", err)
 			return
 		}
-		fmt.Fprint(conn, parsedRes, '\n')
+		fmt.Fprintf(conn, "%s \n", parsedRes)
 
 
 	})
