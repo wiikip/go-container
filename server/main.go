@@ -113,7 +113,7 @@ func main() {
 	})
 	server.addHandler(GET_PODS, func(req Request, conn net.Conn){
 		var response ResponsePods
-
+		fmt.Println("Handler 2 triggered")
 		pods, err := server.KubeClient.GetPods()
 		if err != nil {
 			log.Println("ERROR: ", err)
@@ -124,6 +124,7 @@ func main() {
 		}
 
 		parsedRes , err := json.Marshal(response)
+		fmt.Println("Sending ", parsedRes)
 		if err != nil{
 			log.Println("ERROR: ", err)
 			return
