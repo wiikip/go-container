@@ -14,12 +14,12 @@ resource "kubernetes_role" "go-container-role" {
 resource "kubernetes_role_binding" "go-container-rb" {
   metadata {
     name = "go-container-rb"
+    namespace = "go-container-managed"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
     name      = kubernetes_role.go-container-role.metadata.0.name
-    namespace = "go-container-managed"
   }
   subject {
     kind      = "ServiceAccount"
