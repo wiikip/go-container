@@ -2,4 +2,8 @@ module github.com/wiikip/go-container-server
 
 go 1.16
 
-require github.com/joho/godotenv v1.3.0 // direct
+require (
+	k8s.io/api v0.20.5 // indirect
+	k8s.io/apimachinery v0.20.5 // indirect
+	k8s.io/client-go v0.20.5 // indirect
+)
