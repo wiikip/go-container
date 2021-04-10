@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+const (
+	DOCKER_BUILD = "DOCKER_BUILD"
+)
 type Client struct {
 	conn net.Conn
 }
@@ -34,7 +37,7 @@ func (client *Client) SendMsg(ctx context.Context,msg string, payload interface{
 	}
 	c := make(chan string)
 
-	cancelCtx, cancel := context.WithTimeout(ctx, 200*time.Millisecond)
+	cancelCtx, cancel := context.WithTimeout(ctx, 1000*time.Millisecond)
 	defer cancel()
 	go func(){
 		buffer, err := bufio.NewReader(conn).ReadBytes('\n')
