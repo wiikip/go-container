@@ -21,7 +21,7 @@ func (sender *Sender) createSendAction(win *gtk.ApplicationWindow, myClient *cli
 		}
 		fmt.Println("Le texte est:", text)
 			ctx := context.Background()
-		err = myClient.SendMsg(ctx, client.DOCKER_BUILD, "10", func(s string){log.Println(s)})
+		err = myClient.SendMsg(ctx, client.GET_PODS, "10", func(s string){log.Println(s)})
 		if err != nil {
 			log.Println("error:",err)
 			return

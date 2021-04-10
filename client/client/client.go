@@ -11,6 +11,7 @@ import (
 
 const (
 	DOCKER_BUILD = "DOCKER_BUILD"
+	GET_PODS = "GET_PODS"
 )
 type Client struct {
 	conn net.Conn
