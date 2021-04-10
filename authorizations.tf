@@ -13,7 +13,7 @@ resource "kubernetes_role" "go-container-role" {
 
 resource "kubernetes_role_binding" "go-container-rb" {
   metadata {
-    name = "go-container-rb"
+    name      = "go-container-rb"
     namespace = "go-container-managed"
   }
   role_ref {
