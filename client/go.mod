@@ -1,4 +1,4 @@
-module github.com/wiikip/go-container-client
+module github.com/wiikip/go-container/client
 
 go 1.16
 

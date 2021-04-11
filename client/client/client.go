@@ -9,6 +9,19 @@ import (
 	"time"
 )
 
+const (
+	DOCKER_BUILD = "DOCKER_BUILD"
+	GET_PODS = "GET_PODS"
+)
+
+type ResponsePods struct {
+	Payload []PodsData `json:"payload"`
+}
+
+type PodsData struct {
+	Name string `json:"name"`
+	Uri string `json:"uri"`
+}
 type Client struct {
 	conn net.Conn
 }
@@ -34,7 +47,7 @@ func (client *Client) SendMsg(ctx context.Context,msg string, payload interface{
 	}
 	c := make(chan string)
 
-	cancelCtx, cancel := context.WithTimeout(ctx, 200*time.Millisecond)
+	cancelCtx, cancel := context.WithTimeout(ctx, 1000*time.Millisecond)
 	defer cancel()
 	go func(){
 		buffer, err := bufio.NewReader(conn).ReadBytes('\n')

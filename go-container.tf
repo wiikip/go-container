@@ -3,20 +3,20 @@ resource "kubernetes_deployment" "go-container-server" {
     name      = "go-container-server"
     namespace = "go-container"
     labels = {
-      app = "server"
+      app = "go-container"
     }
   }
   spec {
     replicas = 3
     selector {
       match_labels = {
-        app = "server"
+        app = "go-container"
       }
     }
     template {
       metadata {
         labels = {
-          app = "server"
+          app = "go-container"
         }
       }
       spec {
@@ -55,5 +55,8 @@ resource "kubernetes_service" "go-container-service" {
 
 output "nodeport" {
   value = kubernetes_service.go-container-service.spec.0.port.0.node_port
+}
 
+output "tag" {
+  value = var.tag
 }
