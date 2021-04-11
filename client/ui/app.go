@@ -1,6 +1,9 @@
 package ui
 
 import (
+	"context"
+	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 
@@ -11,7 +14,8 @@ import (
 
 type Sender struct {
 	SendButton *gtk.Button
-	MsgEntry *gtk.Entry
+	UriEntry *gtk.Entry
+	NameEntry *gtk.Entry
 }
 
 func CreateMain(application *gtk.Application, myClient *client.Client) {
@@ -29,6 +33,17 @@ func CreateMain(application *gtk.Application, myClient *client.Client) {
 			log.Println("Error",err)
 			return
 		}
+		pods := make(chan *client.ResponsePods)
+		go myClient.SendMsg(context.TODO(),client.GET_PODS,"", func(s string){
+			response := &client.ResponsePods{}
+			fmt.Println(s)
+			err :=json.Unmarshal([]byte(s),response)
+			if err != nil {
+				fmt.Println("ERROR:", err)
+			}
+			pods <- response
+		})
+		podsInfo := <- pods
 		win, err := gtk.ApplicationWindowNew(application)
 		errorCheck(err)
 		grid, err := gtk.GridNew()
@@ -42,23 +57,49 @@ func CreateMain(application *gtk.Application, myClient *client.Client) {
 
 		btn, err := gtk.ButtonNewWithLabel("Envoyer")
 		errorCheck(err)
-		textArea, err := gtk.EntryNew()
+		textAreaUri, err := gtk.EntryNew()
+		if err != nil{
+			log.Println("Error creating Text Area:", err)
+			return
+		}
+		textAreaName, err := gtk.EntryNew()
 		if err != nil{
 			log.Println("Error creating Text Area:", err)
 			return
 		}
 
-		sender.MsgEntry = textArea
+
+		sender.UriEntry = textAreaUri
 		sender.SendButton = btn
+		sender.NameEntry = textAreaName
 		
 		act := sender.createSendAction(win, myClient)
 
 		win.AddAction(act)
 
-		grid.Add(sender.MsgEntry)
+		grid.Add(sender.UriEntry)
+		grid.Add(sender.NameEntry)
+
 		grid.Add(sender.SendButton)
 
 		btn.SetActionName("win.SendData")
+
+		// add info about running container
+		for ind, podInfo := range podsInfo.Payload{
+
+			textName, err := gtk.TextViewNew()
+			if err != nil {
+				fmt.Println("ERROR: ",err)
+			}
+
+			textBuffer,err := textName.GetBuffer()
+			if err != nil {
+				fmt.Println("ERROR: ",err)
+			}
+
+			textBuffer.SetText(podInfo.Name)
+			grid.Attach(textName,1,2+ind,1,1)
+		}
 		win.Add(grid)
 		// Show the Window and all of its components.		
 		win.ShowAll()

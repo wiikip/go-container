@@ -2,6 +2,7 @@ package ui
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -15,13 +16,26 @@ func (sender *Sender) createSendAction(win *gtk.ApplicationWindow, myClient *cli
 
 	act.Connect("activate", func(action *glib.SimpleAction){
 		fmt.Println("Asking for Docker Creation")
-		text, err := sender.MsgEntry.GetText()
+		uri, err := sender.UriEntry.GetText()
 		if err != nil{
 			fmt.Println("Error getting text", err)
 		}
-		fmt.Println("Le texte est:", text)
-			ctx := context.Background()
-		err = myClient.SendMsg(ctx, client.GET_PODS, "10", func(s string){log.Println(s)})
+				
+		name, err := sender.NameEntry.GetText()
+		if err != nil{
+			fmt.Println("Error getting text", err)
+		}
+
+		podData := client.PodsData{name,uri}
+
+		payload, err := json.Marshal(podData)
+		if err != nil{
+			log.Println("Failed to marshal req: ",err)
+		}
+
+		ctx := context.Background()
+
+		err = myClient.SendMsg(ctx, client.DOCKER_BUILD, payload, func(s string){log.Println(s)})
 		if err != nil {
 			log.Println("error:",err)
 			return

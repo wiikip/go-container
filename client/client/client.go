@@ -13,6 +13,15 @@ const (
 	DOCKER_BUILD = "DOCKER_BUILD"
 	GET_PODS = "GET_PODS"
 )
+
+type ResponsePods struct {
+	Payload []PodsData `json:"payload"`
+}
+
+type PodsData struct {
+	Name string `json:"name"`
+	Uri string `json:"uri"`
+}
 type Client struct {
 	conn net.Conn
 }
