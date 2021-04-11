@@ -27,7 +27,6 @@ func main() {
 
 	// Connect function to application startup event, this is not required.
 
-
 	// Launch the application
 	os.Exit(application.Run(os.Args))
 }

@@ -8,5 +8,4 @@ resource "kubernetes_namespace" "go-container-managed" {
   metadata {
     name = "go-container-managed"
   }
-
 }
