@@ -16,7 +16,7 @@ import (
 
 const (
 	DOCKER_BUILD = "DOCKER_BUILD"
-	GET_PODS = "GET_PODS"
+	GET_PODS     = "GET_PODS"
 )
 
 type Request struct {
@@ -34,7 +34,7 @@ type ResponsePods struct {
 
 type PodsData struct {
 	Name string `json:"name"`
-	Uri string `json:"uri"`
+	Uri  string `json:"uri"`
 }
 
 type HandleFunc = func(Request, net.Conn)
@@ -82,8 +82,6 @@ func (myServer *MyServer) waitForConnections() {
 		}
 		myServer.clients = append(myServer.clients, &conn)
 
-
-
 		fmt.Println("Successfully loaded kube client")
 		fmt.Println("Client connected.")
 		fmt.Println("Client " + conn.RemoteAddr().String() + " connected.")
@@ -108,10 +106,10 @@ func main() {
 		if err != nil {
 			log.Println("ERROR:", err)
 		}
-		log.Println("Pod Created:" , pod)
+		log.Println("Pod Created:", pod)
 
 	})
-	server.addHandler(GET_PODS, func(req Request, conn net.Conn){
+	server.addHandler(GET_PODS, func(req Request, conn net.Conn) {
 		var response ResponsePods
 		fmt.Println("Handler 2 triggered")
 		pods, err := server.KubeClient.GetPods()
@@ -119,18 +117,17 @@ func main() {
 			log.Println("ERROR: ", err)
 			return
 		}
-		for _,pod := range pods.Items{
-			response.Payload = append(response.Payload, PodsData{pod.Name, pod.Spec.Containers[0].Image} )
+		for _, pod := range pods.Items {
+			response.Payload = append(response.Payload, PodsData{pod.Name, pod.Spec.Containers[0].Image})
 		}
 
-		parsedRes , err := json.Marshal(response)
+		parsedRes, err := json.Marshal(response)
 		fmt.Println("Sending ", parsedRes)
-		if err != nil{
+		if err != nil {
 			log.Println("ERROR: ", err)
 			return
 		}
 		fmt.Fprintf(conn, "%s \n", parsedRes)
-
 
 	})
 	server.waitForConnections()
@@ -152,11 +149,12 @@ func (server *MyServer) handleConn(conn net.Conn) {
 	}
 
 	var req Request
+	log.Println("Received: ", string(buffer))
+
 	err = json.Unmarshal(buffer, &req)
 	if err != nil {
 		log.Println("Received message format is not supported")
 	}
-	log.Println("Received: ", req)
 	go server.Handlers[req.Msg](req, conn)
 
 	server.handleConn(conn)
