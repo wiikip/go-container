@@ -153,7 +153,7 @@ func (server *MyServer) handleConn(conn net.Conn) {
 
 	err = json.Unmarshal(buffer, &req)
 	if err != nil {
-		log.Println("Received message format is not supported")
+		log.Println("Received message format is not supported:", err)
 	}
 	go server.Handlers[req.Msg](req, conn)
 
