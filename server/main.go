@@ -156,6 +156,7 @@ func (server *MyServer) handleConn(conn net.Conn) {
 	if err != nil {
 		log.Println("Received message format is not supported")
 	}
+	log.Println("Received: ", req)
 	go server.Handlers[req.Msg](req, conn)
 
 	server.handleConn(conn)
