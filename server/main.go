@@ -121,6 +121,7 @@ func main() {
 			log.Println("ERROR:", err)
 		}
 		log.Println("Pod Created:", pod)
+		fmt.Fprint(conn, "Successfully created Pod")
 
 	})
 	server.addHandler(GET_PODS, func(req Request, conn net.Conn) {
@@ -168,6 +169,7 @@ func (server *MyServer) handleConn(conn net.Conn) {
 	err = json.Unmarshal(buffer, &req)
 	if err != nil {
 		log.Println("Received message format is not supported:", err)
+		fmt.Fprintln(conn, "Received message format is not supported:", err)
 	}
 	go server.Handlers[req.Msg](req, conn)
 
