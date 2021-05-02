@@ -5,10 +5,15 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func GetPod(imageUri string) *core.Pod {
+type BuildPayload struct {
+	Name string `mapstructure:"name"`
+	Uri  string `mapstructure:"uri"`
+}
+
+func NewPod(buildInfos BuildPayload) *core.Pod {
 	return &core.Pod{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      imageUri,
+			Name:      buildInfos.Name,
 			Namespace: "go-container-managed",
 			Labels: map[string]string{
 				"app": "demo",
@@ -17,8 +22,8 @@ func GetPod(imageUri string) *core.Pod {
 		Spec: core.PodSpec{
 			Containers: []core.Container{
 				{
-					Name:            imageUri,
-					Image:           imageUri,
+					Name:            buildInfos.Uri,
+					Image:           buildInfos.Uri,
 					ImagePullPolicy: core.PullIfNotPresent,
 					Command: []string{
 						"sleep",
@@ -28,5 +33,5 @@ func GetPod(imageUri string) *core.Pod {
 			},
 		},
 	}
-	 
+
 }

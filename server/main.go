@@ -8,7 +8,8 @@ import (
 	"net"
 	"os"
 
-	kubeclient "github.com/wiikip/go-container-server/kube"
+	"github.com/mitchellh/mapstructure"
+	kubeclient "github.com/wiikip/go-container/server/kube"
 
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -20,8 +21,8 @@ const (
 )
 
 type Request struct {
-	Msg     string `json:"msg"`
-	Payload string `json:"payload"`
+	Msg     string            `json:"msg"`
+	Payload map[string]string `json:"payload"`
 }
 
 type Response struct {
@@ -102,7 +103,20 @@ func main() {
 
 	server.addHandler(DOCKER_BUILD, func(req Request, conn net.Conn) {
 		fmt.Println("Handler 1 triggered")
-		pod, err := server.KubeClient.CreatePod(kubeclient.GetPod(req.Payload))
+
+		buildInfos := kubeclient.BuildPayload{}
+
+		mapstructure.Decode(req.Payload, buildInfos)
+		if buildInfos.Name == "" {
+			log.Println("Empty name is not allowed")
+			fmt.Fprint(conn, "Please specify a name: EMPTY NAME NOT ALLOWED")
+		}
+		if buildInfos.Uri == "" {
+			log.Println("Empty uri is not allowed")
+			fmt.Fprint(conn, "Please specify a name: EMPTY URI NOT ALLOWED")
+		}
+
+		pod, err := server.KubeClient.CreatePod(kubeclient.NewPod(buildInfos))
 		if err != nil {
 			log.Println("ERROR:", err)
 		}
