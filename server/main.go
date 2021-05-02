@@ -109,11 +109,11 @@ func main() {
 		mapstructure.Decode(req.Payload, &buildInfos)
 		if buildInfos.Name == "" {
 			log.Println("Empty name is not allowed")
-			fmt.Fprint(conn, "Please specify a name: EMPTY NAME NOT ALLOWED")
+			fmt.Fprintln(conn, "Please specify a name: EMPTY NAME NOT ALLOWED")
 		}
 		if buildInfos.Uri == "" {
 			log.Println("Empty uri is not allowed")
-			fmt.Fprint(conn, "Please specify a name: EMPTY URI NOT ALLOWED")
+			fmt.Fprintln(conn, "Please specify a name: EMPTY URI NOT ALLOWED")
 		}
 
 		pod, err := server.KubeClient.CreatePod(kubeclient.NewPod(buildInfos))
@@ -121,7 +121,7 @@ func main() {
 			log.Println("ERROR:", err)
 		}
 		log.Println("Pod Created:", pod)
-		fmt.Fprint(conn, "Successfully created Pod")
+		fmt.Fprintln(conn, "Successfully created Pod")
 
 	})
 	server.addHandler(GET_PODS, func(req Request, conn net.Conn) {
