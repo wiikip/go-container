@@ -104,9 +104,9 @@ func main() {
 	server.addHandler(DOCKER_BUILD, func(req Request, conn net.Conn) {
 		fmt.Println("Handler 1 triggered")
 
-		buildInfos := &kubeclient.BuildPayload{}
+		buildInfos := kubeclient.BuildPayload{}
 
-		mapstructure.Decode(req.Payload, buildInfos)
+		mapstructure.Decode(req.Payload, &buildInfos)
 		if buildInfos.Name == "" {
 			log.Println("Empty name is not allowed")
 			fmt.Fprint(conn, "Please specify a name: EMPTY NAME NOT ALLOWED")
