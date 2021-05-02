@@ -104,7 +104,7 @@ func main() {
 	server.addHandler(DOCKER_BUILD, func(req Request, conn net.Conn) {
 		fmt.Println("Handler 1 triggered")
 
-		buildInfos := kubeclient.BuildPayload{}
+		buildInfos := &kubeclient.BuildPayload{}
 
 		mapstructure.Decode(req.Payload, buildInfos)
 		if buildInfos.Name == "" {
