@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -9,7 +10,6 @@ import (
 	"github.com/wiikip/go-container/client/client"
 	"github.com/wiikip/go-container/client/ui"
 )
-
 
 func main() {
 	// Create a new application.
@@ -20,20 +20,13 @@ func main() {
 	}
 	ui.CreateMain(application, &myClient)
 
-
-
-
-	// Connect to server 
+	// Connect to server
 
 	// Connect function to application startup event, this is not required.
 
 	// Launch the application
 	os.Exit(application.Run(os.Args))
 }
-
-
-
-
 
 // onMainWindowDestory is the callback that is linked to the
 // on_main_window_destroy handler. It is not required to map this,
