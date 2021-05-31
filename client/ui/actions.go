@@ -25,7 +25,7 @@ func (sender *DockerCreationSender) createSendAction(myClient *client.Client) *g
 			fmt.Println("Error getting text", err)
 		}
 
-		podData := client.PodsData{name, uri}
+		podData := client.PodsData{Name: name, Uri: uri}
 
 		payload, err := json.Marshal(podData)
 		if err != nil {

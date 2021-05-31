@@ -49,6 +49,9 @@ func CreateMain(application *gtk.Application, myClient *client.Client) {
 			log.Println("Failed to create Grid", err)
 			return
 		}
+		grid.SetColumnSpacing(20)
+		grid.SetRowSpacing(20)
+		grid.SetOrientation(gtk.ORIENTATION_VERTICAL)
 
 		formGrid, err := createCreationForm(win, myClient)
 		if err != nil {
@@ -62,8 +65,10 @@ func CreateMain(application *gtk.Application, myClient *client.Client) {
 
 		go activateLiveUpdatePods(myClient, gridPods)
 
-		grid.Attach(formGrid, 0, 0, 5, 5)
-		grid.Attach(gridPods.Grid, 0, 1, 1, 1)
+		// grid.Attach(formGrid, 0, 0, 5, 5)
+		// grid.Attach(gridPods.Grid, 0, 1, 1, 1)
+		grid.Add(formGrid)
+		grid.Add(gridPods.Grid)
 		win.Add(grid)
 		win.ShowAll()
 		// Show the Window and all of its components.
@@ -112,15 +117,16 @@ func createCreationForm(win *gtk.ApplicationWindow, myClient *client.Client) (*g
 
 	btnCreation.SetActionName("win.SendData")
 	// Field to chose Docker URI
-	grid.Attach(uriLabel, 0, 2, 2, 1)
+	grid.Attach(uriLabel, 0, 0, 2, 1)
 	grid.Attach(uriEntry, 3, 0, 2, 1)
 
 	grid.Attach(nameLabel, 0, 1, 2, 1)
 	grid.Attach(nameEntry, 3, 1, 2, 1)
 
 	fmt.Println("Attached button")
-	grid.Attach(btnCreation, 0, 0, 2, 1)
+	grid.Attach(btnCreation, 0, 2, 2, 1)
 
+	grid.SetRowSpacing(5)
 	sender.NameEntry = nameEntry
 	sender.UriEntry = uriEntry
 	sender.SendButton = btnCreation
@@ -167,6 +173,7 @@ func DisplayPods(gridsPod *PodsGrid) {
 			fmt.Println("ERROR: ", err)
 		}
 		textBuffer.SetText(podInfo.Name)
-		gridsPod.Grid.Attach(textName, 1, ind, 1, 1)
+		gridsPod.Grid.Attach(textName, 1, ind, 2, 1)
+		gridsPod.Grid.ShowAll()
 	}
 }

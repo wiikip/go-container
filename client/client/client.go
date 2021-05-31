@@ -68,6 +68,23 @@ func (client *Client) SendMsg(ctx context.Context, msg string, payload interface
 	}
 	return nil
 }
+
+func (client *Client) CreatePod(podData PodsData) {
+	payload, err := json.Marshal(podData)
+	if err != nil {
+		log.Println("Failed to marshal req: ", err)
+	}
+
+	ctx := context.Background()
+
+	err = client.SendMsg(ctx, DOCKER_BUILD, string(payload), func(s string) {
+		log.Println(s)
+	})
+	if err != nil {
+		log.Println("error:", err)
+		return
+	}
+}
 func (client *Client) FetchPods(podsChan chan []PodsData) {
 	client.SendMsg(context.TODO(), GET_PODS, "{}", func(s string) {
 		response := &ResponsePods{}
